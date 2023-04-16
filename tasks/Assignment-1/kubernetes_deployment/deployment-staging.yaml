@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suspicious-events-detector
+  namespace: staging
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: suspicious-events-detector
+  template:
+    metadata:
+      labels:
+        app: suspicious-events-detector
+    spec:
+      containers:
+      - name: suspicious-events-detector
+        image: suspicious-events-detector:latest
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: suspicious-events-detector-service
+  namespace: staging
+spec:
+  type: LoadBalancer
+  selector:
+    app: suspicious-events-detector
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
