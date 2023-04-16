@@ -27,7 +27,7 @@ metadata:
   name: suspicious-events-detector-service
   namespace: staging
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: suspicious-events-detector
   ports:
